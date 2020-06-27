@@ -16,7 +16,7 @@ fun main() {
     node3.random = node1
 
     val linkedList = LinkedList()
-    val deepCopy = linkedList.deepCopy(node1)
+    val deepCopy = linkedList.nextDeepCopy(node1)
     // LinkedList data changed.
     node1.data = 101
     node2.data = 202
@@ -37,18 +37,18 @@ data class Node<T>(
 )
 
 class LinkedList {
-    fun <T> deepCopy(node: Node<T>?): Node<T>? {
+    fun <T> nextDeepCopy(node: Node<T>?): Node<T>? {
         if (node != null) {
             return Node(
                     data = node.data,
-                    previous = newCopy(node.previous),
-                    next = deepCopy(node.next),
-                    random = newCopy(node.random)
+                    previous = newDeepCopy(node.previous),
+                    next = nextDeepCopy(node.next),
+                    random = newDeepCopy(node.random)
             )
         } else return null
     }
 
-    fun <T> newCopy(node: Node<T>?): Node<T>? {
+    fun <T> newDeepCopy(node: Node<T>?): Node<T>? {
         if (node != null) {
             return Node(
                     data = node.data,
