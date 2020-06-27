@@ -4,7 +4,7 @@
 */
 
 fun main() {
-    val linkedList = LinkedList()
+    // Setup
     val node1 = Node(1)
     val node2 = Node(2)
     val node3 = Node(3)
@@ -15,17 +15,15 @@ fun main() {
     node3.previous = node2
     node3.random = node1
 
+    val linkedList = LinkedList()
     val deepCopy = linkedList.deepCopy(node1)
-
     // LinkedList data changed.
     node1.data = 101
     node2.data = 202
     node3.data = 303
     val shallowCopy = linkedList.shallowCopy(node1)
-
     println("Deep copy made")
     linkedList.print(deepCopy)
-
     println()
     println("Shallow copy made")
     linkedList.print(shallowCopy)
