@@ -1,16 +1,18 @@
+// Todo: Generic 'Node<T>'
 class Node(
         var prev: Node? = null,
-        var data: Int,
-        var next: Node? = null
+        var next: Node? = null,
+        var rand: Node? = null,
+        var data: Int
 )
 
-// TODO: Generic 'Node<T>'
 class LinkedList(
         var first: Node? = null,
-        var last: Node? = null
+        var last: Node? = null,
+        val randMap: HashMap<Node?, Node?> = hashMapOf()
 ) {
     // Add Node to the end of LinkedList
-    fun add(data: Int) {
+    fun add(data: Int): Node {
         val temp = last
         val newNode = Node(prev = temp, data = data)
         last = newNode
@@ -18,24 +20,42 @@ class LinkedList(
             first = newNode
         else
             temp.next = newNode
+        return newNode
     }
 
-    // TODO: Random pointer
-    //  Map with the old nodes as key and the new node as value
-    fun deepCopy(prev: Node?, node: Node?): Node? {
-        return if (node == null) null
-        else return Node(data = node.data).also { newNode ->
+    fun deepCopyWithoutRandoms(prev: Node?, node: Node?): Node? {
+        return if (node == null)
+            null
+        else {
+            val newNode = Node(data = node.data)
+            if (node.rand != null) {
+                newNode.rand = node.rand
+                randMap.put(node.rand, null)
+            }
             newNode.prev = prev
-            newNode.next = deepCopy(newNode, node.next)
+            newNode.next = deepCopyWithoutRandoms(newNode, node.next)
+            if (randMap.containsKey(node))
+                randMap.put(node, newNode)
+            return newNode
         }
+    }
+
+    fun updateRandoms(node: Node?): Node? {
+        if (node != null) {
+            if (node.rand != null)
+                node.rand = randMap.get(node.rand!!)
+            updateRandoms(node.next)
+            return node
+        } else return null
     }
 
     fun clear() {
         var node = first
         while (node != null) {
             node.prev = null
-            node.data = 0
             node.next = null
+            node.rand = null
+            node.data = 0
             node = node.next
         }
     }
@@ -44,7 +64,7 @@ class LinkedList(
         var output = ""
         var node = first
         while (node != null) {
-            output += String.format("(prev:%s data:%s next:%s)\n", node.prev, node.data, node.next)
+            output += String.format("(prev:%s next:%s data:%s random:%s)\n", node.prev, node.next, node.data, node.rand)
             node = node.next
         }
         return output

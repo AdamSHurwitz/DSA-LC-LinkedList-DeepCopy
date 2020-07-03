@@ -1,7 +1,7 @@
 package test
 
 fun <T> printAssert(actual: T, expect: T) {
-    println("Actual: ${actual}")
-    println("Expect: ${expect}")
+    println("Actual:\n${actual}")
+    println("Expect:\n${expect}")
     println()
 }
