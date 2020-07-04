@@ -1,18 +1,17 @@
-// Todo: Generic 'Node<T>'
-class Node(
-        var prev: Node? = null,
-        var next: Node? = null,
-        var rand: Node? = null,
-        var data: Int
+class Node<T>(
+        var prev: Node<T>? = null,
+        var next: Node<T>? = null,
+        var rand: Node<T>? = null,
+        var data: T
 )
 
-class LinkedList(
-        var first: Node? = null,
-        var last: Node? = null,
-        val randMap: HashMap<Node?, Node?> = hashMapOf()
+class LinkedList<T>(
+        var first: Node<T>? = null,
+        var last: Node<T>? = null,
+        val randMap: HashMap<Node<T>?, Node<T>?> = hashMapOf()
 ) {
     // Add Node to the end of LinkedList
-    fun add(data: Int): Node {
+    fun add(data: T): Node<T> {
         val temp = last
         val newNode = Node(prev = temp, data = data)
         last = newNode
@@ -23,7 +22,7 @@ class LinkedList(
         return newNode
     }
 
-    fun deepCopyWithoutRandoms(prev: Node?, node: Node?): Node? {
+    fun deepCopyWithoutRandoms(prev: Node<T>?, node: Node<T>?): Node<T>? {
         return if (node == null)
             null
         else {
@@ -40,7 +39,7 @@ class LinkedList(
         }
     }
 
-    fun updateRandoms(node: Node?): Node? {
+    fun updateRandoms(node: Node<T>?): Node<T>? {
         if (node != null) {
             if (node.rand != null)
                 node.rand = randMap.get(node.rand!!)
@@ -55,12 +54,12 @@ class LinkedList(
             node.prev = null
             node.next = null
             node.rand = null
-            node.data = 0
+            node.data = 0 as T
             node = node.next
         }
     }
 
-    fun toString(first: Node?): String {
+    fun toString(first: Node<T>?): String {
         var output = ""
         var node = first
         while (node != null) {
