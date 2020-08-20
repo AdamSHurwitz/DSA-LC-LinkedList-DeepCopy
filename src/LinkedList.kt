@@ -54,7 +54,6 @@ class LinkedList<T>(
             node.prev = null
             node.next = null
             node.rand = null
-            node.data = 0 as T
             node = node.next
         }
     }

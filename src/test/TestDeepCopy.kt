@@ -73,7 +73,7 @@ class TestDeepCopy <T> {
         @Order(3)
         fun `Test after 'first' node is cleared`() {
             linkedList.clear()
-            val expectClearString = linkedList.toString(Node(data = 0 as T))
+            val expectClearString = linkedList.toString(Node(data = 1 as T))
             val actualClearString = linkedList.toString(linkedList.first)
             printAssert(actualClearString, expectClearString)
             assertThat(actualClearString).isEqualTo(expectClearString)
